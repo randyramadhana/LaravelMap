@@ -3,6 +3,4 @@
 	{{ Form::submit('Submit') }}
 {{ Form::close() }}
 
-{{ Form::open(array('route' => 'deleteall'))}}
-	{{ Form::submit('delete all data in the database')}}
-{{ Form::close() }}
+<a href='<?php echo url(); ?>/deleteall'>delete all data in the database</a>
