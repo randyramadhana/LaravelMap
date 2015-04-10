@@ -19,5 +19,3 @@ Route::get('/', function()
 Route::post('/attach', array('as' => 'attach', 'uses' => 'HomeController@attach'));
 
 Route::get('/deleteall', array('as' => 'deleteall', 'uses' => 'HomeController@deleteAll'));
-
-Route::get('/map', array('as' => 'map', 'uses' => 'HomeController@showMap'));

@@ -33,16 +33,13 @@ class HomeController extends BaseController {
 			 	$location = Location::create(array('name' => $column['Nama Lokasi'], 'level' => $column['Level'], 'polygonal_coordinates' => $column['Polygon XML']));
 			}
 		}
-		return View::make('new');
+		return View::make('map');
 	}
 
 	public function deleteAll() {
 		Location::truncate();
 		Marker::truncate();
-	}
-
-	public function showMap() {
-		return View::make('map');
+		return View::make('new');
 	}
 
 }
