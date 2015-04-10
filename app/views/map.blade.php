@@ -65,7 +65,7 @@
     </script>
 </head>
 <body>
-
+  <a href="<?php echo url(); ?>">Home</a>
 	<div id="map-canvas">
 	</div>
 </body>
