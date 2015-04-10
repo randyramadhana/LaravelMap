@@ -10,4 +10,5 @@
 	{{ Form::submit('Submit') }}
 {{ Form::close() }}
 
-<a href='<?php echo url(); ?>/deleteall'>delete all data in the database</a>
+<a href='<?php echo url(); ?>/deleteall'>delete all data in the database</a> <br><br>
+<a href='<?php echo url(); ?>/map'>show map</a>
