@@ -6,6 +6,7 @@
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?sensor=false">
     </script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.5/src/markerwithlabel_packed.js"></script>
     <script type="text/javascript">
       function initialize() {
         var mapOptions = {
@@ -20,7 +21,7 @@
           foreach ($locations as $location)
           {
             $polygonXML = $location->polygonal_coordinates;
-            if (isset($polygonXML)) {
+            if (!empty($polygonXML)) {
               $polygonalCoordinates = preg_replace( "/<coordinates>/", "", $polygonXML);
               $coordinates = explode(" ", $polygonalCoordinates);
               ?>
@@ -44,22 +45,54 @@
               }
               ?>
 
-              var locationPolygon = new google.maps.Polygon({
-                paths: locationCoords,
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0.35
-              });
+              var markerContent = " {{ str_replace('"', "'", $location->name) }} ";
 
-              locationPolygon.setMap(map);
+              makePolygon(locationCoords, markerContent, map);
+
+              
+
+              
               <?php
             }
           }
           ?>
 
         
+      }
+
+      function makePolygon(polyCoords, markerContent, map) {
+        var locationPolygon = new google.maps.Polygon({
+                paths: polyCoords,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35
+              });
+        
+        var marker = new MarkerWithLabel({
+                position: new google.maps.LatLng(0,0),
+                draggable: false,
+                raiseOnDrag: false,
+                map: map,
+                labelContent: markerContent,
+                labelAnchor: new google.maps.Point(30, 20),
+                labelClass: "labels", // the CSS class for the label
+                labelStyle: {opacity: 1.0},
+                icon: "http://placehold.it/1x1",
+                visible: false
+              });
+
+        locationPolygon.setMap(map);
+
+              google.maps.event.addListener(locationPolygon, "mousemove", function(event) {
+                marker.setPosition(event.latLng);
+                marker.setVisible(true);
+              });
+              google.maps.event.addListener(locationPolygon, "mouseout", function(event) {
+                marker.setVisible(false);
+              });
+
       }
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
