@@ -33,7 +33,7 @@ class HomeController extends BaseController {
 			 	$location = Location::create(array('name' => $column['Nama Lokasi'], 'level' => $column['Level'], 'polygonal_coordinates' => $column['Polygon XML']));
 			}
 		}
-		return View::make('map');
+		return redirect('map');
 	}
 
 	public function deleteAll() {
@@ -41,6 +41,10 @@ class HomeController extends BaseController {
 		Marker::truncate();
 		Session::flash('deleteall', 'You have deleted all data in the database!');
 		return View::make('new');
+	}
+
+	public function showMap() {
+		return View::make('map');
 	}
 
 }
