@@ -39,6 +39,7 @@ class HomeController extends BaseController {
 	public function deleteAll() {
 		Location::truncate();
 		Marker::truncate();
+		Session::flash('deleteall', 'You have deleted all data in the database!');
 		return View::make('new');
 	}
 
